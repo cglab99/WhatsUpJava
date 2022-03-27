@@ -1,0 +1,115 @@
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+public class BaseBall extends JFrame {
+
+	int[] usr = new int[3];
+	int[] comp = new int[3];
+	JLabel display;
+	JPanel numPanel;
+	JTextArea history;
+	JButton[] buttons = new JButton[12];
+	int counter = 0;
+	int order = 0;
+	int strike = 0;
+	int ball = 0;
+	
+	public BaseBall() {
+		this.setTitle("Baseball Game");
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setBounds(100, 100, 300, 400);
+		this.setLayout(new BorderLayout());
+
+		makeGUI();		
+		initComp();		
+
+	}
+
+	private void initComp() {
+		Random r = new Random();
+		comp[0] = Math.abs( r.nextInt() ) % 9 + 1;
+		do {
+			comp[1] = Math.abs( r.nextInt() ) % 9 + 1;
+		} while( comp[0] == comp[1] );
+		do {
+			comp[2] = Math.abs( r.nextInt() ) % 9 + 1;
+		} while( comp[0] == comp[2] || comp[1] == comp[2]);
+		System.out.println( comp[0] + "," + comp[1] + "," + comp[2]);
+	}
+
+	private void makeGUI() {
+		// GUI
+		display = new JLabel("야구게임을 시작합니다.");
+		display.setHorizontalAlignment( JLabel.CENTER );
+		numPanel = new JPanel();
+		history = new JTextArea(10,0);
+		JScrollPane sc = new JScrollPane(history);
+		history.append( "counter = " + counter + "\n" );
+		
+		numPanel.setLayout(new GridLayout(4,3));
+		for(int i=0;i<9;i++ ) {
+			buttons[i] = new JButton( Integer.toString(i+1) );
+			buttons[i].addActionListener( e -> {
+				usr[order] = Integer.parseInt( e.getActionCommand() ) ;
+				order = (order + 1) % 3;
+				display.setText( usr[0] + "," + usr[1] + "," + usr[2] );
+			});
+			numPanel.add( buttons[i]);
+		}
+		buttons[9] = new JButton( "<-" );
+		numPanel.add( buttons[9] );
+		buttons[10] = new JButton( "다시");
+		numPanel.add( buttons[10] );
+		buttons[11] = new JButton( "공격");
+		buttons[11].addActionListener( e -> {
+			if( usr[0] == 0 || usr[1] == 0 || usr[2] ==0 ) {
+				display.setText( "1 ~ 9 사이의 숫자를 입력하세요." );
+			} else if( usr[0] == usr[1] || usr[0] == usr[2] || usr[1] == usr[2] ) {
+				display.setText( "중복된 숫자를 입력하면 안됩니다." );
+			} else {
+				counter = counter + 1;
+				if( comp[0] == usr[0] ) strike = strike + 1;
+				if( comp[1] == usr[1] ) strike = strike + 1;
+				if( comp[2] == usr[2] ) strike = strike + 1;
+			
+				if( comp[0] == usr[1] ) ball = ball + 1;
+				if( comp[0] == usr[2] ) ball = ball + 1;
+				if( comp[1] == usr[0] ) ball = ball + 1;
+				if( comp[1] == usr[2] ) ball = ball + 1;
+				if( comp[2] == usr[0] ) ball = ball + 1;
+				if( comp[2] == usr[1] ) ball = ball + 1;
+				
+				history.append("\n counter = " + counter + ", Strike = " + strike + ", Ball = " + ball );
+				
+				if( strike == 3 ) {
+					display.setText("당신이 이겼습니다. 다시 공격하세요");
+					initComp();
+				} else {
+					display.setText("다시 공격하세요");
+				}
+				strike = 0;
+				ball = 0;
+			}			
+		});
+		numPanel.add( buttons[11] );
+		
+		this.add( BorderLayout.NORTH, display );
+		this.add( BorderLayout.CENTER, numPanel );
+		this.add( BorderLayout.SOUTH, sc );
+	}
+			
+	public static void main(String[] args) {
+		new BaseBall().setVisible(true);
+	}
+
+}
