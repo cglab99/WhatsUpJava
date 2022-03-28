@@ -1,0 +1,102 @@
+package mouseTest;
+
+import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+
+public class ControlTest extends JFrame {
+	
+	JLabel label;
+	
+	public static void main(String[] args) {
+		new ControlTest().setVisible(true);
+	}
+	
+	public ControlTest() {
+		this.setBounds(100,100,300,200);
+		this.setLayout(null);
+		label = new JLabel("test");
+		label.setBounds(20, 20, 100, 30);
+		label.setForeground(Color.RED);
+		label.setBackground(Color.CYAN);
+		label.setOpaque(true);
+		this.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				label.setBackground( Color.GREEN );
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				label.setBackground( Color.CYAN );
+			}
+		});
+		label.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				label.setForeground( Color.BLACK );
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				label.setForeground( Color.RED );
+			}
+		});
+		
+		JPanel panel = new JPanel();
+		panel.setBorder( BorderFactory.createEtchedBorder() );
+		panel.setBounds(20, 55, 200, 100);
+		this.add(panel);
+		
+		this.add(label);
+	}
+}
