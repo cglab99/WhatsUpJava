@@ -1,3 +1,4 @@
+
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -13,16 +14,9 @@ class MPanel extends JPanel{
 	}
     public MPanel() {
     	this.addMouseListener( new MouseListener() {
-
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if( e.getButton() == 3 ) {
-					Graphics g = getGraphics();
-					paintComponent(g);
-				}
-
 			}
-
 			@Override
 			public void mousePressed(MouseEvent e) {
 				x1 = e.getX();
@@ -30,47 +24,31 @@ class MPanel extends JPanel{
 				x2 = e.getX();
 				y2 = e.getY();
 			}
-
 			@Override
 			public void mouseReleased(MouseEvent e) {
 			}
-
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
-
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
-    		
     	});
     	this.addMouseMotionListener( new MouseMotionListener() {
-
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				// TODO Auto-generated method stub
 				x1 = x2;
 				y1 = y2;
 				x2 = e.getX();
 				y2 = e.getY();
 				repaint();
 			}
-
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
-    		
     	});
     }
-
 }
-
 public class MouseTest extends JFrame {
 
 	MPanel panel;
@@ -81,10 +59,8 @@ public class MouseTest extends JFrame {
 		panel = new MPanel();
 		panel.setBounds(0, 0, 400, 400);
 		this.add(panel);
-		
 	}
 	public static void main(String[] args) {
 		new MouseTest().setVisible(true);
 	}
-
 }
